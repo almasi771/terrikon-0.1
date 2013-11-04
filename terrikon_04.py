@@ -15,6 +15,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #EMAIL SETTINGS
 #EMAIL SETTINGS TO BE CHANGED
+#BLA Bla
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=587,
