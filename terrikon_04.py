@@ -27,7 +27,8 @@ mail=Mail(app)
 
 @app.route('/')
 @app.route('/index')
-def index():    
+def index():
+    #return render_template('web_setup.html', available_templates = get_available_templates()    
     return render_template('web_setup.html')
 '''
 #test for emailing - works correctly
@@ -96,9 +97,31 @@ def upload_file():
     return render_template('upload-error.html')
     #flash(u'Select the file dog')
 
+def get_relative_path_to_templates_dir():
+    """
+    finds path to templates directory
+    """
+    for root, dirs, files in os.walk('.'):
+        if "templates" in root:
+            return root
+
+def get_available_templates():
+    """
+    returns list of templates that can be used for emails
+    """
+    result_list = []
+    templates_dir = get_relative_path_to_templates_dir()
+    for filename in os.listdir(templates_dir):
+            result_list.append(filename)
+    return result_list
+
 @app.route("/uploaded_file")
 def uploaded_file():
 	return render_template('file_uploaded.html')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return "Dog, what page are you looking for? This one doesn't exist "
 
 if __name__ == "__main__":
     app.run(debug=True)

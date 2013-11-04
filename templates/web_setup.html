@@ -1,18 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 
+<!--choose a template dropdown and render email--> 
+
+<!-- apply when the templates are in correct dir -->
+<!-- <div id='test_template'>
+		Choose your template
+	<select name='template_select'> 
+		{% for template in available_templates %}
+			<option> 
+				{{ template }} 
+			</option>
+		{% endfor %}
+	</select>
+</div> 
+--> 
+
+<div>
+	<select name = 'available_templates'>
+		<option value = "1"> One </option>
+		<option value = "2"> Two </option>
+	</select>
+</div>
+
 <!-- test email -->
 <div id='test_email'>
-	<a href = '/test_email'> Test your email </a>
-
+	<a href = '/test_email'> Test your template with an email </a>
 </div>
-
-<!--choose a template dropdown and render email--> 
-<div id='template_option'>
-
-</div>
-	Choose your template
-<div>
 
 <!-- uploading the file-->
 <div id='upload_file'>
