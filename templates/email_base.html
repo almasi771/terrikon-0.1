@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+	<h3> This is how your email looks like </h3>
+
+	<div id="content">{% block content %}{% endblock %}</div>
+
+	<form name='/test-email' method ='post'>
+		<input type='submit' value='Send test email'>
+	</form>
+	<p> 
+		<a href="/index">  <- Go back </a> 
+	</p>
+</body>
+</html>

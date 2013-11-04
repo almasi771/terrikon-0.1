@@ -1,0 +1,15 @@
+<p>Dear {{ LastName }},</p>
+
+<p>This is a sample email generated for {{ Program }}.</p>
+
+{% if Finalist %}
+<p>We're delighted to inform you that you are a finalist for the {{ Program }}. Please return the attached document by {{ DocumentDeadline }}.</p>
+{% endif %}
+
+{% if Alternate %}
+<p>We're happy to inform you that you are an alternate for the {{ ProgramYear }} {{ ProgramName }}.</p>
+{% endif %}
+
+<p>All the best,</p>
+
+<p>The {{ Program }} team</p>

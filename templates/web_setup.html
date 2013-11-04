@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- test email -->
+<div id='test_email'>
+	<a href = '/test_email'> Test your email </a>
+
+</div>
+
+<!--choose a template dropdown and render email--> 
+<div id='template_option'>
+
+</div>
+	Choose your template
+<div>
+
+<!-- uploading the file-->
+<div id='upload_file'>
+<form action="/web_setup" method="post" enctype="multipart/form-data">
+      <p>
+      	Upload your file
+      	<input type=file  name=file>
+      </p>
+
+      <p> 
+        <input type="submit" value="Upload">
+      </p>
+</form>
+</div>
+
+{% endblock %}
