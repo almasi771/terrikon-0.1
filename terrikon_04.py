@@ -23,7 +23,7 @@ app.config.update(
     MAIL_USE_SSL= False,
     MAIL_USE_TLS = True,
     MAIL_USERNAME = 'almasi77@gmail.com', 
-    MAIL_PASSWORD = 'caLAk7y7' #REMOVE BEFORE GIT
+    MAIL_PASSWORD = '####' #REMOVE BEFORE GIT
     )
 
 mail=Mail(app)
