@@ -7,7 +7,7 @@ We're delighted to inform you that you are a finalist for the {{ Program }}. Ple
 {% endif %}
 
 {% if Alternate %}
-We're happy to inform you that you are an alternate for the {{ ProgramYear }} {{ ProgramName }}.
+We're happy to inform you that you are an alternate for the {{ Program }}.
 {% endif %}
 
 All the best,

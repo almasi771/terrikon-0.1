@@ -2,8 +2,11 @@ from flask import Flask, render_template, session, request, jsonify, Response, u
 from flask.ext.mail import Mail, Message
 from werkzeug import secure_filename
 from threading import Thread
-from table_fu import TableFu
+from collections import defaultdict
+#from table_fu import TableFu
+#import pandas as pd
 import os
+import csv
 
 #init for uploads
 UPLOAD_FOLDER = '/Users/administrator/Documents/Projects/terrikon_04/uploads'
@@ -14,15 +17,13 @@ mail = Mail(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #EMAIL SETTINGS
-#EMAIL SETTINGS TO BE CHANGED
-#BLA Bla
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=587,
     MAIL_USE_SSL= False,
     MAIL_USE_TLS = True,
     MAIL_USERNAME = 'almasi77@gmail.com', 
-    MAIL_PASSWORD = '######' #REMOVE BEFORE GIT
+    MAIL_PASSWORD = 'caLAk7y7' #REMOVE BEFORE GIT
     )
 
 mail=Mail(app)
@@ -32,6 +33,7 @@ mail=Mail(app)
 def index():
     #return render_template('web_setup.html', available_templates = get_available_templates()    
     return render_template('web_setup.html')
+
 '''
 #test for emailing - works correctly
 def email_test():
@@ -52,12 +54,26 @@ def send_mail(subject, sender, recipients, txt_body, html_body):
     msg.html = html_body
     mail.send(msg)
 
+'''
 @app.route('/test_email', methods = ['GET', 'POST'])
 def test_email():
+    #not working because pandas is broken, THANKS MAVERICKS OSX!
+    #df_data = pd.read_csv('/Users/almaskebekbayev/Dropbox/backup/Projects/terrikon_04/uploads/terrikon_test_file.csv')
+    #emails = parse_data(df_data['Email'])
+    
+    #read cvs file
+    #this needs to be replaced by user's uploaded file
+    cols = defaultdict(list)
+    with open('/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/terrikon_test_file.csv') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            for (k,v) in row.items():
+                cols[k].append(v)
+
     if request.method == 'POST':
         send_mail('Terrikon: test email',
             "almasi77@gmail.com",
-            ['almasi77@hotmail.com'],
+            cols['Email'],
             render_template('sample_email.txt',
                 LastName = 'Kebekbayev',
                 Program = 'FLEX',
@@ -72,6 +88,95 @@ def test_email():
                 Alternate = False))
         return redirect(url_for('email_sent'))
     
+    return render_template('sample_email.html',
+        LastName='Kebekbayev',
+        Program = 'FLEX',
+        DocumentDeadline = 'Nov. 1, 2013',
+        Finalist = True,
+        Alternate = False)
+'''
+def fixText(text):
+    row = []
+    z = text.find(',')
+    if z == 0:  
+        row.append('')
+    else:   
+        row.append(text[:z])
+    for x in range(len(text)):
+        if text[x] != ',':  
+            pass
+        else:
+            if x == (len(text)-1):  
+                row.append('')
+            else:
+                if ',' in text[(x+1):]:
+                    y = text.find(',', (x+1))
+                    c = text[(x+1):y]
+                else:   
+                    c = text[(x+1):]
+                row.append(c)
+    return row
+ 
+def createTuple(oldFile):
+    f1 = open(oldFile, "r")
+    tup = []
+    while 1:
+        text = f1.readline()
+        if text == "":  
+            break
+        else:   
+            pass
+        if text[-1] == '\n':
+            text = text[:-1]
+        else:   
+            pass
+        row = fixText(text)
+        tup.append(row)
+    return tup
+
+@app.route('/test_email', methods = ['GET', 'POST'])
+def test_email():
+    #not working because pandas is broken, THANKS MAVERICKS OSX!
+    #df_data = pd.read_csv('/Users/almaskebekbayev/Dropbox/backup/Projects/terrikon_04/uploads/terrikon_test_file.csv')
+    #emails = parse_data(df_data['Email'])
+    
+    #read cvs file
+    #this needs to be replaced by user's uploaded file
+    
+    #csv struct - LastName ,Program,DocumentDeadLine,Status,Email
+    '''
+    cols = defaultdict(list)
+    with open('/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/terrikon_test_file.csv') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            for (k,v) in row.items():
+                cols[k].append(v)
+    '''
+    f = '/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/terrikon_test_file.csv'
+    data = createTuple(f)
+
+    if request.method == 'POST':
+        #for user_email in cols['Email']:
+        for col in data:
+            send_mail('Terrikon: test email',
+                "almasi77@gmail.com",
+                [col[4]],
+                render_template('sample_email.txt',
+                LastName = str(col[0]),
+                Program = str(col[1]),
+                DocumentDeadline = str(col[2]),
+                Finalist = str(col[3]),
+                Alternate = str(col[3])),
+                render_template('html_email_template.html',
+                LastName = str(col[0]),
+                Program = str(col[1]),
+                DocumentDeadline = str(col[2]),
+                Finalist = str(col[3]),
+                Alternate = str(col[3])))
+        
+        return redirect(url_for('email_sent'))
+        #return str(data)
+
     return render_template('sample_email.html',
         LastName='Kebekbayev',
         Program = 'FLEX',
@@ -99,6 +204,7 @@ def upload_file():
     return render_template('upload-error.html')
     #flash(u'Select the file dog')
 
+
 def get_relative_path_to_templates_dir():
     """
     finds path to templates directory
@@ -116,6 +222,13 @@ def get_available_templates():
     for filename in os.listdir(templates_dir):
             result_list.append(filename)
     return result_list
+
+#again pandas extension is not working
+'''
+def parse_data(series_emails):
+    emails = series_emails.tolist()
+    return emails
+'''
 
 @app.route("/uploaded_file")
 def uploaded_file():
