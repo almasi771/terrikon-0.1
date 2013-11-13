@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+	<!-- Include jquery -->
+    <script type=text/javascript
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<!-- Script Root for portability: https://github.com/mitsuhiko/flask/blob/master/examples/jqueryexample/templates/layout.html -->
+	<script type=text/javascript>
+		var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
     	<title>
     		Title: Terrikon.0.0.1
     	</title>

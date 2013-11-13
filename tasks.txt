@@ -1,0 +1,20 @@
+Part 1. 
+
+1. Generate PDFs using Python extensions.
+Resources: http://xhtml2pdf.appspot.com/static/pisa-en.html
+
+Part 2. 
+
+1. Based on chosen template output the column names for the csv file
+Structure: 
+	based on the <option>, show either AJAX or dump CSV file with already names column fields
+2. Test mail
+Structure: 
+	*for now, let the user upload a sample csv and send it to him/herself 
+
+Part 3. 
+
+1. Figure out how to identify and attach pregenerated PDFs
+
+Notes:
+Status - Alternative, Finalist is buggy 	
