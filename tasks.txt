@@ -1,7 +1,7 @@
 Part 1. 
 
-1. Generate PDFs using Python extensions.
-Resources: http://xhtml2pdf.appspot.com/static/pisa-en.html
+1. Generate PDFs using Python extensions - DONE
+Resources: http://xhtml2pdf.appspot.com/static/pisa-en.html 
 
 Part 2. 
 
@@ -11,6 +11,8 @@ Structure:
 2. Test mail
 Structure: 
 	*for now, let the user upload a sample csv and send it to him/herself 
+3. Let the user input config settings for ['gmail', 'hotmail', 'americancouncils.org']
+	*americancouncils.org: ask Will 
 
 Part 3. 
 

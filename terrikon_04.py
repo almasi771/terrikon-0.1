@@ -27,8 +27,8 @@ app.config.update(
     MAIL_USE_SSL= False,
     MAIL_USE_TLS = True,
     MAIL_USERNAME = 'almasi77@gmail.com', 
-    MAIL_PASSWORD = 'caLAk7y7' #REMOVE BEFORE GIT
-    )
+    MAIL_PASSWORD = '###' #REMOVE BEFORE GIT
+    )t
 
 mail=Mail(app)
 
@@ -42,20 +42,6 @@ def index():
 @app.route('/test')
 def test():
     return render_template('available_colms.html')
-
-'''
-#test for emailing - works correctly
-def email_test():
-    msg = Message(
-           'Hello',
-           sender='almasi77@gmail.com',
-           recipients=['almasi77@hotmail.com'])
-    msg.body = "This is the email body"
-    msg.html = "<b> This is the email body </b>"
-    mail.send(msg)
-    return "Sent"
-'''
-
 
 def fixText(text):
     row = []
