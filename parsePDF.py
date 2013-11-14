@@ -1,15 +1,25 @@
-from xhtml2pdf import pisa
-from StringIO import StringIO
+from xhtml2pdf import pisa     
+# Define your data
+sourceHtml = "<html><body><p>To PDF or not to PDF<p></body></html>"
+outputFilename = "test_xhtml2pdf.pdf"
 
-def main():
-	data = list(csv.reader(open("/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/terrikon_test_file.csv"), delimiter= ','))
-	#'hello'+'world'+'.pdf', "wb"
+# Utility function
+def convertHtmlToPdf(sourceHtml, outputFilename):
+    # open output file for writing (truncated binary)
+    resultFile = open(outputFilename, "w+b")
 
-	'''
-	pdf = pisa.CreatePDF(
-		"Hello <strong> World </strong>",
-		file("/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/	"+"new_file.pdf", "wb"))		
-	'''
-if __name__ == '__main__':
-	pisa.showLogging()
-	main()
+    # convert HTML to PDF
+    pisaStatus = pisa.CreatePDF(
+            sourceHtml,                # the HTML to convert
+            dest=resultFile)           # file handle to recieve result
+
+    # close output file
+    resultFile.close()                 # close output file
+
+    # return True on success and False on errors
+    return pisaStatus.err
+
+# Main program
+if __name__=="__main__":
+    pisa.showLogging()
+    convertHtmlToPdf(sourceHtml, outputFilename)

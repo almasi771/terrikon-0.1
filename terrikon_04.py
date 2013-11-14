@@ -3,7 +3,7 @@ from flask.ext.mail import Mail, Message
 from werkzeug import secure_filename
 from threading import Thread
 from collections import defaultdict
-import ho.pisa as pisa
+from xhtml2pdf import pisa     
 from StringIO import StringIO
 #from table_fu import TableFu
 #import pandas as pd
@@ -105,16 +105,27 @@ def send_mail(subject, sender, recipients, txt_body, html_body, attachment,filen
         msg.attach(filename, "text/html", fp.read())
     mail.send(msg)
 
-def convertHTMLtoPDF(html_file, filename):
-    f = file("/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/"+filename, "wb")
-    pdf = pisa.CreatePDF(Stri)
+def convertHTMLtoPDF(sourceHtml, outputFilename):
+    # open output file for writing (truncated binary)
+    resultFile = open(outputFilename, "w+b")
 
-    '''
+    # convert HTML to PDF
+    pisaStatus = pisa.CreatePDF(
+            sourceHtml,                # the HTML to convert
+            dest=resultFile)           # file handle to recieve result
+
+    # close output file
+    resultFile.close()                 # close output file
+
+    return "/Users/administrator/Dropbox/backup/Projects/terrikon_04/"+outputFilename
+
+
+    """
     pdf = pisa.CreatePDF(
         html_file, 
         file("/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/"+filename, "wb"))
     return "/Users/administrator/Dropbox/backup/Projects/terrikon_04/uploads/"+filename
-    '''
+    """
 
 @app.route('/test_email', methods = ['GET', 'POST'])
 def test_email():
@@ -174,7 +185,6 @@ def test_email():
                     Alternate = True),
                     str(col[0])+str(col[1])+".pdf"),
                 str(col[0])+str(col[1])+".pdf")
-            
         return redirect(url_for('email_sent'))
         #return str(data)
 
