@@ -1,4 +1,4 @@
-Terrikon - a web app that allows to write personalized emails with unique attachements (in this case PDF generated letters).
+Terrikon - a web app that allows to perform mail merge and attach personalized PDF letters per email. 
 
 For security reasons, this project had been moved to a private repositary. 
 
